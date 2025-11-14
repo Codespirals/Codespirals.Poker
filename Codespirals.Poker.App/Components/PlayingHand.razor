@@ -1,0 +1,17 @@
+﻿@using Codespirals.Poker
+
+<div class="poker-hand">
+    @foreach (var card in Cards)
+    {
+        <PlayingCard Card="@card"></PlayingCard>
+    }
+</div>
+
+@code {
+    public IEnumerable<Card> Cards { get; set; }
+
+    public PlayingHand(IEnumerable<Card> cards)
+    {
+        Cards = cards;
+    }
+}

@@ -1,0 +1,9 @@
+﻿<div class="playing-card" data-bs-toggle="tooltip" data-bs-title="@Card.ToString()">@Card.Emoji</div>
+
+@code {
+    public Card Card { get; set; }
+    public PlayingCard(Card card)
+    {
+        Card = card;
+    }
+}

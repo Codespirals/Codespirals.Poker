@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Codespirals.Base.Shared" Version="1.0.150.25305" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Codespirals.Base" />
+  </ItemGroup>
+
+</Project>
