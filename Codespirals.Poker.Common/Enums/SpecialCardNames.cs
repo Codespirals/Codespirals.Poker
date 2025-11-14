@@ -5,5 +5,6 @@ public enum SpecialCardNames
     Jack = 11,
     Queen,
     King,
-    Joker  
+    Joker,
+    Fool
 }

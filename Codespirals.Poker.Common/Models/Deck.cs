@@ -1,65 +1,51 @@
 ﻿using System.Collections.ObjectModel;
 
 namespace Codespirals.Poker;
-public class Deck
+public abstract class Deck
 {
-    private List<Card> _initialCards = [];
-    private List<Card> _spentCards = [];
+    internal List<Card> _cardPool = [];
+    private List<Card> _discardPile = [];
 
-    public ReadOnlyCollection<Card> InitialCards => _initialCards.AsReadOnly();
-    public ReadOnlyCollection<Card> Cards => _initialCards.Except(_spentCards).ToList().AsReadOnly();
-    public ReadOnlyCollection<Card> SpentCards => _spentCards.AsReadOnly();
+    public ReadOnlyCollection<Card> CardPool => _cardPool.AsReadOnly();
+    public ReadOnlyCollection<Card> Cards => _cardPool.Except(_discardPile).ToList().AsReadOnly();
+    public ReadOnlyCollection<Card> DiscardPile => _discardPile.AsReadOnly();
 
-    public Deck()
-    {
-
-    }
-    public void Shuffle() => _initialCards = [.. _initialCards.Shuffle()];
-    public void Restart()
-    {
-        _spentCards = [];
-        _initialCards = [.. _initialCards.OrderBy(c => c.Suit).ThenBy(c => c.Value)];
-    }
     public Card Draw()
     {
+        if (Cards.Count is 0)
+            return Card.NoCard();
         var card = Cards.First();
-        _spentCards.Add(card);
+        _discardPile.Add(card);
         return card;
     }
-    public IEnumerable<Card> Draw(int number)
+    public Card Draw(byte cardCode)
     {
-        var cards = Cards.Take(number);
-        _spentCards.AddRange(cards);
+        var card = Cards.FirstOrDefault(c => c.CardCode == cardCode);
+        if (card is not null)
+        {
+            _discardPile.Add(card);
+            return card;
+        }
+        return Card.NoCard();
+    }
+    public IEnumerable<Card> Draw(int numberOfCards)
+    {
+        var cards = Cards.Take(numberOfCards);
+        _discardPile.AddRange(cards);
         return cards;
     }
-
-    public static Deck Standard(byte withJokers = 0)
+    public void Return(byte cardCode)
     {
-        var deck = new Deck();
-        for (var s = 0; s < 4; s++)
-        {
-            for (var cv = 1; cv < 14; cv++)
-            {
-                deck._initialCards.Add(new((byte)((s * 16) + cv)));
-            }
-        }
-        for (var i = 0; i < withJokers; i++)
-        {
-            deck._initialCards.Add(Card.Joker());
-        }
-        return deck;
+        var card = DiscardPile.FirstOrDefault(c => c.CardCode == cardCode);
+        if (card is not null)
+            _discardPile.Remove(card);
     }
-    public static Deck MultipleStandard(int number, byte withJokers = 0)
+    public IEnumerable<Card> Peek(int numberOfCards) => Cards.Take(numberOfCards);
+    public void Shuffle() => _cardPool = [.. _cardPool.Shuffle()];
+    public void Order() => _cardPool = [.. _cardPool.OrderBy(c => c.Suit).ThenBy(c => c.Value)];
+    public void Reset()
     {
-        number = Math.Clamp(number, 1, byte.MaxValue);
-        var deck = new Deck();
-        for (var s = 0; s < 4 * number; s++)
-        {
-            for (var cv = 1; cv < 14; cv++)
-            {
-                deck._initialCards.Add(new((byte)((cv * 10) + s)));
-            }
-        }
-        return deck;
+        _discardPile = [];
+        Order();
     }
 }
