@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Codespirals.Poker.Shared", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Codespirals.Poker.Console", "Codespirals.Poker.Console\Codespirals.Poker.Console.csproj", "{F453B557-7F5A-4B17-9638-D7DBD0E03B95}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Codespirls.Poker.Web", "Codespirls.Poker.Web\Codespirls.Poker.Web.csproj", "{7DFBF71C-4C6D-4A8D-AFC5-568D75A32BCE}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Codespirals.Poker.App", "Codespirals.Poker.App\Codespirals.Poker.App.csproj", "{7A5A085E-E073-424C-B219-9E2CC871CE95}"
 EndProject
 Global
@@ -25,10 +23,6 @@ Global
 		{F453B557-7F5A-4B17-9638-D7DBD0E03B95}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F453B557-7F5A-4B17-9638-D7DBD0E03B95}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F453B557-7F5A-4B17-9638-D7DBD0E03B95}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7DFBF71C-4C6D-4A8D-AFC5-568D75A32BCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7DFBF71C-4C6D-4A8D-AFC5-568D75A32BCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7DFBF71C-4C6D-4A8D-AFC5-568D75A32BCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7DFBF71C-4C6D-4A8D-AFC5-568D75A32BCE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7A5A085E-E073-424C-B219-9E2CC871CE95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7A5A085E-E073-424C-B219-9E2CC871CE95}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7A5A085E-E073-424C-B219-9E2CC871CE95}.Release|Any CPU.ActiveCfg = Release|Any CPU

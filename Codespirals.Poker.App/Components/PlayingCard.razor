@@ -1,9 +1,11 @@
-﻿<div class="playing-card" data-bs-toggle="tooltip" data-bs-title="@Card.ToString()">@Card.Emoji</div>
+﻿<div class="playing-card" @onmouseover="ShowName">@Card.Emoji <span hidden>@Card.Value</span></div>
 
 @code {
-    public Card Card { get; set; }
-    public PlayingCard(Card card)
+    [Parameter]
+    public required Card Card { get; set; }
+
+    public void ShowName()
     {
-        Card = card;
+        
     }
 }

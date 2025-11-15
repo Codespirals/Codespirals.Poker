@@ -24,4 +24,13 @@
     <Using Include="Codespirals.Poker" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Components\PlayingCard.razor">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Components\PlayingHand.razor">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

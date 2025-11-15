@@ -1,0 +1,150 @@
+﻿@page "/blackjack"
+
+<PageTitle>Blackjack</PageTitle>
+
+<div class="align-content-center">
+    <PlayingCard Card="new Card(true)"></PlayingCard>
+    <button @onclick="Draw">🫴</button>
+    <button @onclick="Stay">✋</button>
+</div>
+<div class="align-content-center">
+    <div>Dealer's Hand - <span>@DealerScore</span></div>
+    <PlayingHand Hand="DealerHand"></PlayingHand>
+</div>
+<div class="align-content-center">
+    <div>Player's Hand - <span>@PlayerScore</span></div>
+    <PlayingHand Hand="PlayerHand"></PlayingHand>
+</div>
+<div class="align-content-center">
+    <button @onclick="Reset">↺</button>
+    <span>@Message</span>
+</div>
+
+@code {
+    public PokerDeck Deck { get; set; } = new();
+    public Hand DealerHand = new();
+    public Hand PlayerHand = new();
+    public int DealerScore => EvaluateBlackjackHand(DealerHand);
+    public int PlayerScore => EvaluateBlackjackHand(PlayerHand);
+    public string Message = "";
+    public bool GameEnded = false;
+
+    protected override void OnInitialized()
+    {
+        Deck.Shuffle();
+        DealerHand.Add(Deck.Draw(2));
+        PlayerHand.Add(Deck.Draw(2));
+    }
+    public void Reset()
+    {
+        Deck.Reset();
+        Message = "";
+        PlayerHand = new();
+        DealerHand = new();
+        Deck.Shuffle();
+        DealerHand.Add(Deck.Draw(2));
+        PlayerHand.Add(Deck.Draw(2));
+        GameEnded = false;
+    }
+    public void Draw()
+    {
+        if (GameEnded)
+            return;
+        DealerDraw();
+        PlayerHand.Add(Deck.Draw());
+        var dealerScore = EvaluateBlackjackHand(DealerHand);
+        var playerScore = EvaluateBlackjackHand(PlayerHand);
+        GameEnded = DeterimneWinner(dealerScore, playerScore);
+    }
+    public void Stay()
+    {
+        if (GameEnded)
+            return;
+        DealerDraw();
+        var dealerScore = EvaluateBlackjackHand(DealerHand);
+        var playerScore = EvaluateBlackjackHand(PlayerHand);
+        var determined = DeterimneWinner(dealerScore, playerScore);
+        if (!determined)
+        {
+            switch (dealerScore - playerScore)
+            {
+                case < 0:
+                    Message = "You win!";
+                    break;
+                case > 0:
+                    Message = "You lose...!";
+                    break;
+                default:
+                    Message = "A draw!";
+                    break;
+            }
+        }
+        GameEnded = true;
+    }
+    private void DealerDraw()
+    {
+        var dealerHand = EvaluateBlackjackHand(DealerHand);
+        if (dealerHand < 18)
+            DealerHand.Add(Deck.Draw());
+    }
+    private bool DeterimneWinner(int valueDealer, int valuePlayer)
+    {
+        switch (valuePlayer)
+        {
+            case 21:
+                Message = "Wow! Blackjack!";
+                return true;
+            case > 21:
+                Message = "You went over! You lose...";
+                return true;
+            default:
+                break;
+        }
+        switch (valueDealer)
+        {
+            case 21:
+                Message = "Dealer Blackjack... You lose.";
+                return true;
+            case > 21:
+                Message = "Dealer went over! You win!";
+                return true;
+            default:
+                break;
+        }
+        Message = "Another hit?";
+        return false;
+    }
+    public int EvaluateBlackjackHand(Hand hand)
+    {
+        var value = 0;
+        foreach (var card in hand.Cards)
+        {
+            switch (card.Value)
+            {
+                case 1:
+                    value += 11;
+                    break;
+                case > 10:
+                    value += 10;
+                    break;
+                default:
+                    value += card.Value;
+                    break;
+            }
+        }
+        if (value > 21)
+            value = ReduceAcesIfOver(hand, value);
+        return value;
+    }
+    private int ReduceAcesIfOver(Hand hand, int value)
+    {
+        var aces = hand.Cards.Where(c => c.Value == 1);
+        foreach (var ace in aces)
+        {
+            if (value < 22)
+                return value;
+            value -= 10;
+        }
+        return value;
+    }
+}

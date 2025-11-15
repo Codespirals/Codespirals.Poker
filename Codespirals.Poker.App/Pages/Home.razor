@@ -4,13 +4,11 @@
 
 <h1>The cards:</h1>
 
-Welcome to your new app.
+@foreach (var card in Deck.CardPool)
+{
+    <PlayingCard Card="@card"></PlayingCard>
+}
 
 @code {
-    public Deck Deck { get; set; }
-
-    public Home()
-    {
-        
-    }
+    public PokerDeck Deck { get; set; } = new();
 }
