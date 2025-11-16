@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Codespirals.Poker.Common\Codespirals.Poker.Shared.csproj" />
+    <ProjectReference Include="..\Codespirals.Poker.Shared\Codespirals.Poker.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>
