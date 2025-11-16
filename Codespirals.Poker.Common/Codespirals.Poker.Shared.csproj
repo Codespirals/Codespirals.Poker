@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Codespirals.Base.Shared" Version="1.0.150.25305" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Using Include="Codespirals.Base" />
   </ItemGroup>
 
